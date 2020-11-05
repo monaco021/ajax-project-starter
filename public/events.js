@@ -29,3 +29,23 @@ document.querySelector("#new-pic").addEventListener("click", (event) =>{
         document.querySelector(".loader").innerHTML = ""
     })
 })
+
+document.getElementById("upvote").addEventListener("click", event => {
+  fetch("/kitten/upvote", { method: "PATCH" })
+    .then(res => {
+      return res.json();
+    })
+    .then(res => {
+      document.querySelector(".score").innerHTML = res.score;
+    })
+})
+
+document.getElementById("downvote").addEventListener("click", event => {
+  fetch("/kitten/downvote", { method: "PATCH" })
+  .then(res => {
+    return res.json();
+  })
+  .then(res => {
+    document.querySelector(".score").innerHTML = res.score;
+  })
+})
