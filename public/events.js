@@ -49,3 +49,18 @@ document.getElementById("downvote").addEventListener("click", event => {
     document.querySelector(".score").innerHTML = res.score;
   })
 })
+
+document.querySelector(".comment-form").addEventListener("submit", event => {
+  event.preventDefault();
+  const formData = new FormData(document.querySelector(".comment-form"));
+
+  let comment = formData.get("user-comment") // this is a string
+  console.log(comment)
+  fetch("/kitten/comments", { method: "POST", body: JSON.stringify({comment}), headers: {"Content-Type": "application/json"}})
+  .then(res => {
+    return res.json();
+  })
+    .then(() => {
+
+  })
+})
