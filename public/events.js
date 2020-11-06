@@ -7,8 +7,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
   if (res.ok) {
     document.querySelector(`.cat-pic`).setAttribute("src", json.src)
   } else {
-
-    throw alert("Something went wrong! Please try again!");
+    document.querySelector(".error").innerHTML = json.message;
+    // throw alert(json.message);
 
   }
 })
@@ -55,12 +55,21 @@ document.querySelector(".comment-form").addEventListener("submit", event => {
   const formData = new FormData(document.querySelector(".comment-form"));
 
   let comment = formData.get("user-comment") // this is a string
-  console.log(comment)
   fetch("/kitten/comments", { method: "POST", body: JSON.stringify({comment}), headers: {"Content-Type": "application/json"}})
   .then(res => {
     return res.json();
   })
-    .then(() => {
-
+  .then(res => {
+    const commentArray = res.comments;
+    console.log(commentArray)
+    document.querySelector(".comments").innerHTML = ""
+    commentArray.forEach((ele, i) => {
+      console.log(ele)
+      const newDiv = document.createElement("div");
+      newDiv.innerHTML = ele;
+      newDiv.setAttribute("id", i);
+      console.log(newDiv);
+      document.querySelector(".comments").appendChild(newDiv);
+    })
   })
 })
